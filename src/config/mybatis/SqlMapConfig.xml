@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+
+
+<configuration>
+  <!--<properties resource="db.properties"></properties>-->
+
+<typeAliases>
+  <!-- 单个别名 <typeAlias  type="mybatis.entity.User" alias="user"/>-->
+  <!--批量别名，别名就是类名不区分大小写-->
+<package name="com.ssm.po"></package>
+
+</typeAliases>
+
+  <!--<settings>-->
+    <!--&lt;!&ndash;全局配置，默认不配置&ndash;&gt;-->
+    <!--<setting name="" value=""/>-->
+  <!--</settings>-->
+
+  <!-- 加载映射文件 -->
+  <mappers>
+    <mapper resource="sqlmap/User.xml"/>
+    <!--<com.ssm.mapper resource="com.ssm.mapper/com.ssm.mapper.xml"/>-->
+    <!--同文件名称，且在同一目录且使用的是mapper代理的方式-->
+    <!--<com.ssm.mapper class="com.ssm.mapper.UserMapper"></com.ssm.mapper>-->
+    <!--批量-->
+
+    <!--当使用spring整合的包扫描器这里就可以注释-->
+    <!--<package name="com.ssm.mappper"></package>-->
+
+  </mappers> 
+</configuration>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/jee
+        http://www.springframework.org/schema/jee/spring-jee.xsd
+        ">
+
+    <!-- 引入配置文件 -->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:db.properties" />
+    </bean>
+
+    <!--配置数据源 dbcp-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${db.dirverClass}" />
+        <property name="url" value="${db.url}" />
+        <property name="username" value="${db.username}" />
+        <property name="password" value="${db.password}" />
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="${db.initialSize}"></property>
+        <!-- 连接池最大数量 -->
+        <property name="maxActive" value="${db.maxActive}"></property>
+        <!-- 连接池最大空闲 -->
+        <property name="maxIdle" value="${db.maxIdle}"></property>
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="${db.minIdle}"></property>
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="${db.maxWait}"></property>
+    </bean>
+
+    <!--sqlSessionFactory-->
+    <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+            <!--加载mybatis配置文件-->
+        <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"/>
+        <!--数据源-->
+        <property name="dataSource" ref="dataSource" />
+        <!--&lt;!&ndash; 自动扫描mapping.xml文件 &ndash;&gt;-->
+        <!--<property name="mapperLocations" value="classpath:com/cn/hnust/mapping/*.xml"></property>-->
+    </bean>
+
+    <!--第一种方法原始Dao方法-->
+    <bean id="userDao" class="com.ssm.dao.UserDaoImpl">
+       <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <!--第二种mapper代理的方法
+    MapperFactoryBean:根据mapper接口生成代理对象
+    使用第三种扫描的方式这里就可以注释了
+    -->
+<!--<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+    <!--mapperInterface：指定mapper接口-->
+ <!--<property name="mapperInterface" value="com.ssm.mappper.UserMapper"/>-->
+    <!--<property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
+<!--</bean>-->
+
+    <!--第三种 mapper扫描
+    从mapper包中扫描mapper接口，自动创建代理对象并注入到spring容器中
+    自动扫描的mapper 的bean的id 就是mapper类名首字母小写
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--指定扫描的包名字-->
+        <!--同文件名称，且在同一目录且使用的是mapper代理的方式
+        如果扫描多个包 ，每个包中间用半角逗号隔开-->
+        <property name="basePackage" value="com.ssm.mappper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+
+
+</beans>

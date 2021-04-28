@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <!-- namespace命名空间，对sql进行分类管理 -->
+
+ <mapper namespace="test">
+ 
+ <!-- statement的Id,将来的sql语句会封装在statement对象中
+ #{}表示一个占位符
+ #{id}参数的名称就是id 如果是简单类型则可以任意
+ resultType：指定的是单条记录，即使返回多条
+ ${}:表示拼接字符串不加任何修饰（可能引起sql注入有安全隐患），如果传入的是简单类型只能用value
+  -->
+ <select id="findByUserId" parameterType="int" resultType="com.ssm.po.User">
+ select* from user where id=#{id}
+ </select>
+ 
+ <!--<select id="findByUserName" parameterType="java.lang.String" resultType="mybatis.entity.User">-->
+ <!--select* from user where name like '%${value}%'-->
+ <!--</select>-->
+
+
+ <!--<insert id="insertUser" parameterType="mybatis.entity.User">-->
+     <!--&lt;!&ndash;-->
+  <!--将插入的数据的之间返回到user实体中，-->
+   <!--SELECT LAST_INSET_ID()得到刚插入的主键Id,只试用于自增主键-->
+   <!--keyProperty：将查询的主键Id设置到parameterType的指定的对象中指定的属性-->
+   <!--AFTER：相对于insert语句之后执行-->
+    <!--&ndash;&gt;-->
+     <!--INSERT INTO user (name,address)VALUE (#{name},#{address})-->
+
+     <!--<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">-->
+         <!--SELECT LAST_INSERT_ID()-->
+     <!--</selectKey>-->
+
+ <!--&lt;!&ndash;    INSERT INTO user (id,name,address)VALUE (#{id},#{name},#{address})-->
+
+     <!--<selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">-->
+         <!--SELECT uuid()-->
+     <!--</selectKey>&ndash;&gt;-->
+ <!--</insert>-->
+
+<!--<delete id="deleteById" parameterType="java.lang.Integer">-->
+    <!--DELETE FROM user WHERE id=#{id}-->
+<!--</delete>-->
+
+    <!--<update id="update" parameterType="mybatis.entity.User">-->
+       <!--UPDATE  user set name= #{name} ,address=#{address} WHERE id=#{id}-->
+    <!--</update>-->
+
+ </mapper>
