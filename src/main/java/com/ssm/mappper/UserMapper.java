@@ -10,7 +10,7 @@ import com.ssm.po.User;
  */
 public interface UserMapper {
 
-     public   User findByUserId(int id);
+    User findByUserId(int id);
 
 
 

@@ -10,12 +10,14 @@
 
   <dependencies>
 
+    <!-- https://mvnrepository.com/artifact/junit/junit -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
+
 
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -23,11 +25,6 @@
       <version>1.7.21</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>RELEASE</version>
-    </dependency>
 
 
     <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
@@ -76,6 +73,12 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.35</version>
     </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>RELEASE</version>
+    </dependency>
+
 
   </dependencies>
   <build>
