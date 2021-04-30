@@ -1,4 +1,4 @@
-package com.ssm;
+package com.ssm.Multipledata;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

@@ -6,7 +6,7 @@
 
 
 <configuration>
-  <!--<properties resource="db.properties"></properties>-->
+
 
 <typeAliases>
   <!-- 单个别名 <typeAlias  type="mybatis.entity.User" alias="user"/>-->
@@ -16,13 +16,13 @@
 </typeAliases>
 
   <!--<settings>-->
-    <!--&lt;!&ndash;全局配置，默认不配置&ndash;&gt;-->
+    <!--全局配置，默认不配置-->
     <!--<setting name="" value=""/>-->
   <!--</settings>-->
 
   <!-- 加载映射文件 -->
   <mappers>
-    <mapper resource="sqlmap/User.xml"/>
+    <!--<mapper resource="sqlmap/User.xml"/>-->
     <!--<com.ssm.mapper resource="com.ssm.mapper/com.ssm.mapper.xml"/>-->
     <!--同文件名称，且在同一目录且使用的是mapper代理的方式-->
     <!--<com.ssm.mapper class="com.ssm.mapper.UserMapper"></com.ssm.mapper>-->

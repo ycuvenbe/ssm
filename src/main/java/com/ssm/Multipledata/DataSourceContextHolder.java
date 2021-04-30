@@ -1,4 +1,4 @@
-package com.ssm;
+package com.ssm.Multipledata;
 
 /**
  * Created by Mars-Hasee on 2017/8/4.
