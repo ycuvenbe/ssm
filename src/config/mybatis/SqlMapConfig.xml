@@ -29,7 +29,7 @@
     <!--批量-->
 
     <!--当使用spring整合的包扫描器这里就可以注释-->
-    <!--<package name="com.ssm.mappper"></package>-->
+    <!--<package nacom.ssm.mapperper"></package>-->
 
   </mappers> 
 </configuration>

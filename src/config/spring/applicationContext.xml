@@ -25,10 +25,10 @@
     </bean>
 
     <!--配置数据源 dbcp-->
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+    <bean id="file" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="${db.dirverClass}" />
-        <property name="url" value="${db.url}" />
+        <property name="url" value="${db.url1}" />
         <property name="username" value="${db.username}" />
         <property name="password" value="${db.password}" />
         <!-- 初始化连接大小 -->
@@ -43,6 +43,48 @@
         <property name="maxWait" value="${db.maxWait}"></property>
     </bean>
 
+    <!--配置数据源1 dbcp-->
+    <bean id="userservice" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${db.dirverClass}" />
+        <property name="url" value="${db.url2}" />
+        <property name="username" value="${db.username}" />
+        <property name="password" value="${db.password}" />
+        <property name="initialSize" value="${db.initialSize}"></property> <!-- 初始化连接大小 -->
+        <property name="maxActive" value="${db.maxActive}"></property> <!-- 连接池最大数量 -->
+        <property name="maxIdle" value="${db.maxIdle}"></property> <!-- 连接池最大空闲 -->
+        <property name="minIdle" value="${db.minIdle}"></property> <!-- 连接池最小空闲 -->
+        <property name="maxWait" value="${db.maxWait}"></property><!-- 获取连接最大等待时间 -->
+    </bean>
+
+    <!--配置数据源2 dbcp-->
+    <bean id="pay" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${db.dirverClass}" />
+        <property name="url" value="${db.url3}" />
+        <property name="username" value="${db.username}" />
+        <property name="password" value="${db.password}" />
+        <property name="initialSize" value="${db.initialSize}"></property> <!-- 初始化连接大小 -->
+        <property name="maxActive" value="${db.maxActive}"></property> <!-- 连接池最大数量 -->
+        <property name="maxIdle" value="${db.maxIdle}"></property> <!-- 连接池最大空闲 -->
+        <property name="minIdle" value="${db.minIdle}"></property> <!-- 连接池最小空闲 -->
+        <property name="maxWait" value="${db.maxWait}"></property><!-- 获取连接最大等待时间 -->
+    </bean>
+
+    <!-- 动态配置数据源 -->
+    <bean id ="dataSource" class= "com.ssm.DynamicDataSource" >
+        <property name ="targetDataSources">
+            <map key-type ="java.lang.String">
+                <entry value-ref ="file" key= "file"></entry >
+                <entry value-ref ="userservice" key= "userservice"></entry >
+                <entry value-ref ="pay" key= "pay"></entry >
+            </map >
+        </property >
+        <!-- 默认使用ds1的数据源 -->
+        <property name ="defaultTargetDataSource" ref= "userservice"></property >
+    </bean >
+
+
     <!--sqlSessionFactory-->
     <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -54,30 +96,11 @@
         <!--<property name="mapperLocations" value="classpath:com/cn/hnust/mapping/*.xml"></property>-->
     </bean>
 
-    <!--第一种方法原始Dao方法-->
-    <bean id="userDao" class="com.ssm.dao.UserDaoImpl">
-       <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-    </bean>
-
-    <!--第二种mapper代理的方法
-    MapperFactoryBean:根据mapper接口生成代理对象
-    使用第三种扫描的方式这里就可以注释了
-    -->
-<!--<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
-    <!--mapperInterface：指定mapper接口-->
- <!--<property name="mapperInterface" value="com.ssm.mappper.UserMapper"/>-->
-    <!--<property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
-<!--</bean>-->
-
-    <!--第三种 mapper扫描
-    从mapper包中扫描mapper接口，自动创建代理对象并注入到spring容器中
-    自动扫描的mapper 的bean的id 就是mapper类名首字母小写
-    -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!--指定扫描的包名字-->
         <!--同文件名称，且在同一目录且使用的是mapper代理的方式
         如果扫描多个包 ，每个包中间用半角逗号隔开-->
-        <property name="basePackage" value="com.ssm.mappper"/>
+        <property name="basePackage" value="com.ssm.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 

@@ -1,7 +1,7 @@
 //package com.ssm.test;
 //
 //import com.ssm.dao.UserDao;
-//import com.ssm.mappper.UserMapper;
+//import com.ssm.mapper.UserMapper;
 //import com.ssm.po.User;
 //
 //import org.springframework.context.ApplicationContext;

@@ -1,7 +1,5 @@
 package com.ssm.dao;
 
-import com.ssm.mappper.UserMapper;
-import com.ssm.po.User;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -23,9 +21,9 @@ public class UserDaoTest {
 
     @org.junit.Test
     public void findOne() throws Exception {
-        UserMapper userMapper = (UserMapper) applicationContext.getBean("userMapper");
-        User user = userMapper.findByUserId(1);
-        System.out.println(user);
+//        UserMapper userMapper = (UserMapper) applicationContext.getBean("userMapper");
+//        User user = userMapper.findByUserId(1);
+//        System.out.println(user);
     }
 
 }
