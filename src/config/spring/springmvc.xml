@@ -18,7 +18,7 @@
         http://www.springframework.org/schema/jee/spring-jee.xsd
         ">
     <!--扫描包-->
-    <context:component-scan base-package="com.ssm.controller"/>
+    <context:component-scan base-package="com.ssm.*"/>
     <!--如果用这种方法就不用上面的注解，默认加载很多参数绑定 比如json转换解析器，实际开发使用这个注解-->
 
     <!--<mvc:resources mapping="/html/*.html" location="/"></mvc:resources>-->

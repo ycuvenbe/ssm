@@ -15,21 +15,5 @@
 
 </typeAliases>
 
-  <!--<settings>-->
-    <!--全局配置，默认不配置-->
-    <!--<setting name="" value=""/>-->
-  <!--</settings>-->
 
-  <!-- 加载映射文件 -->
-  <mappers>
-    <!--<mapper resource="sqlmap/User.xml"/>-->
-    <!--<com.ssm.mapper resource="com.ssm.mapper/com.ssm.mapper.xml"/>-->
-    <!--同文件名称，且在同一目录且使用的是mapper代理的方式-->
-    <!--<com.ssm.mapper class="com.ssm.mapper.UserMapper"></com.ssm.mapper>-->
-    <!--批量-->
-
-    <!--当使用spring整合的包扫描器这里就可以注释-->
-    <!--<package nacom.ssm.mapperper"></package>-->
-
-  </mappers> 
 </configuration>

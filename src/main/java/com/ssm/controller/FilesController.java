@@ -45,6 +45,7 @@ public class FilesController {
 //        ModelAndView result = new ModelAndView(page_list);
         JSONObject result = new JSONObject();
         List<Files> filesList = filesService.selectByFiles(files, page, rows);
+        System.out.println(filesList.size());
         result.put("pageInfo", new PageInfo<Files>(filesList));
         result.put("queryParam", files);
         result.put("page", page);
