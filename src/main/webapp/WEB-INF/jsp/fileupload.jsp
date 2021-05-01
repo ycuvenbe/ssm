@@ -17,7 +17,9 @@ pageEncoding="utf-8"%>
 
     <h1>采用流的方式上传文件</h1>
 
-    <input type="file" name="file">
+
+    <input type="files" name="files">
+
 
     <input type="submit" value="upload"/>
 
@@ -27,7 +29,9 @@ pageEncoding="utf-8"%>
 
     <h1>采用multipart提供的file.transfer方法上传文件</h1>
 
-    <input type="file" name="file">
+
+    <input type="files" name="files">
+
 
     <input type="submit" value="upload"/>
 
@@ -37,7 +41,9 @@ pageEncoding="utf-8"%>
 
     <h1>使用spring mvc提供的类的方法上传文件</h1>
 
-    <input type="file" name="file">
+
+    <input type="files" name="files">
+
 
     <input type="submit" value="upload"/>
 
