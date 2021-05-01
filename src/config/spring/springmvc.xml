@@ -22,12 +22,28 @@
     <!--如果用这种方法就不用上面的注解，默认加载很多参数绑定 比如json转换解析器，实际开发使用这个注解-->
     <mvc:annotation-driven></mvc:annotation-driven>
 
+
+    <!--文件上传 解析器-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+        <property name="maxUploadSize" value="104857600" />
+
+        <property name="maxInMemorySize" value="4096" />
+
+        <property name="defaultEncoding" value="UTF-8"></property>
+    </bean>
+
+    <!--跨域-->
+    <mvc:cors>
+        <mvc:mapping path="/**" allowed-origins="*" allow-credentials="true" max-age="1800" allowed-methods="GET,POST,OPTIONS"/>
+    </mvc:cors>
+
     <!--处理器视图解析器
     解析jsp ,默认使用jstl标签 classpath 下面得有jstl包
     -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <!--<property name="prefix" value="/WEB-INF/jsp/" />-->
-        <!--<property name="suffix" value=".jsp" />-->
+        <property name="prefix" value="/WEB-INF/jsp/" />
+        <property name="suffix" value=".jsp" />
     </bean>
 
 </beans>
