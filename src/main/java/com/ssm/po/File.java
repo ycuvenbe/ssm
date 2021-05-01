@@ -1,6 +1,6 @@
 package com.ssm.po;
 
-public class Files {
+public class File {
     private Integer id;
 
     private String filename;

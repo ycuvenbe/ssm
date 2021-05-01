@@ -3,14 +3,14 @@ package com.ssm.po;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilesExample {
+public class FileExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public FilesExample() {
+    public FileExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 

@@ -9,8 +9,139 @@
   <url>http://maven.apache.org</url>
 
   <dependencies>
+    <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>3.8.1</version>
+    <scope>test</scope>
+  </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
+  <dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>slf4j-log4j12</artifactId>
+    <version>1.7.21</version>
+  </dependency>
+
+  <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+  <dependency>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis</artifactId>
+    <version>3.2.7</version>
+  </dependency>
+
+
+  <!-- https://mvnrepository.com/artifact/com.sdicons.jsontools/jsontools-core -->
+  <dependency>
+    <groupId>com.sdicons.jsontools</groupId>
+    <artifactId>jsontools-core</artifactId>
+    <version>1.7</version>
+  </dependency>
+
+
+
+  <dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>fastjson</artifactId>
+    <version>1.1.15</version>
+  </dependency>
+  <!-- https://mvnrepository.com/artifact/org.jdom/jdom -->
+  <dependency>
+    <groupId>org.jdom</groupId>
+    <artifactId>jdom</artifactId>
+    <version>1.1.3</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.apache.httpcomponents</groupId>
+    <artifactId>httpclient</artifactId>
+    <version>4.3.5</version>
+  </dependency>
+
+  <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+  <dependency>
+    <groupId>com.google.code.gson</groupId>
+    <artifactId>gson</artifactId>
+    <version>2.8.1</version>
+  </dependency>
+  <!--compile group: 'com.google.zxing', name: 'zxingorg', version: '3.2.0'-->
+  <dependency>
+    <groupId>com.google.zxing</groupId>
+    <artifactId>zxingorg</artifactId>
+    <version>3.2.0</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.bouncycastle</groupId>
+    <artifactId>bcprov-jdk16</artifactId>
+    <version>1.45</version>
+  </dependency>
+
+  <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+  <dependency>
+    <groupId>commons-codec</groupId>
+    <artifactId>commons-codec</artifactId>
+    <version>1.9</version>
+  </dependency>
+
+
+
+  <!--j2ee相关包 servlet、jsp、jstl-->
+  <dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.1.0</version>
+  </dependency>
+  <dependency>
+    <groupId>javax.servlet.jsp</groupId>
+    <artifactId>jsp-api</artifactId>
+    <version>2.2</version>
+  </dependency>
+  <dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>jstl</artifactId>
+    <version>1.2</version>
+  </dependency>
+
+  <!--mysql驱动包-->
+  <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>5.1.35</version>
+  </dependency>
+
+  <!--spring相关包-->
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-web</artifactId>
+    <version>4.3.1.RELEASE</version>
+  </dependency>
+  <dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-webmvc</artifactId>
+    <version>4.3.1.RELEASE</version>
+  </dependency>
+  <!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp -->
+  <dependency>
+    <groupId>commons-dbcp</groupId>
+    <artifactId>commons-dbcp</artifactId>
+    <version>1.2.2</version>
+  </dependency>
+
+
+  <!--其他需要的包-->
+  <dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-lang3</artifactId>
+    <version>3.4</version>
+  </dependency>
+  <dependency>
+    <groupId>commons-fileupload</groupId>
+    <artifactId>commons-fileupload</artifactId>
+    <version>1.3.1</version>
+  </dependency>
+
+
+  <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
     <dependency>
       <groupId>org.mybatis.generator</groupId>
       <artifactId>mybatis-generator-core</artifactId>
@@ -25,12 +156,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!--分页插件-->
-    <dependency>
-      <groupId>com.github.pagehelper</groupId>
-      <artifactId>pagehelper</artifactId>
-      <version>5.0.0</version>
-    </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -39,6 +164,46 @@
     </dependency>
 
 
+    <!--其他需要的包-->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.4</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.3.1</version>
+    </dependency>
+
+    <!--其他需要的包-->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.4</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.3.1</version>
+    </dependency>
+
+    <!--j2ee相关包 servlet、jsp、jstl-->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
     <dependency>
@@ -92,84 +257,9 @@
       <version>RELEASE</version>
     </dependency>
 
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <version>4.3.5</version>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>1.9</version>
-    </dependency>
-
-    <!--其他需要的包-->
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <version>3.4</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-fileupload</groupId>
-      <artifactId>commons-fileupload</artifactId>
-      <version>1.3.1</version>
-    </dependency>
-    <!--j2ee相关包 servlet、jsp、jstl-->
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>javax.servlet-api</artifactId>
-      <version>3.1.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>javax.servlet.jsp</groupId>
-      <artifactId>jsp-api</artifactId>
-      <version>2.2</version>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>
-      <version>1.2</version>
-    </dependency>
-
-    <dependency>
-      <groupId>tk.mybatis</groupId>
-      <artifactId>mapper</artifactId>
-      <version>3.3.6</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.8.0</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/com.sdicons.jsontools/jsontools-core -->
-    <dependency>
-      <groupId>com.sdicons.jsontools</groupId>
-      <artifactId>jsontools-core</artifactId>
-      <version>1.7</version>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.antlr/antlr-runtime -->
-    <dependency>
-      <groupId>org.antlr</groupId>
-      <artifactId>antlr-runtime</artifactId>
-      <version>3.4</version>
-    </dependency>
-
-
-    <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>fastjson</artifactId>
-      <version>1.2.31</version>
-    </dependency>
-
-
 
   </dependencies>
+
   <build>
     <finalName>spring_mvc_mybatis</finalName>
 

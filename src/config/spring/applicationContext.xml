@@ -25,7 +25,7 @@
     </bean>
 
     <!--配置数据源 dbcp-->
-    <bean id="files" class="org.apache.commons.dbcp.BasicDataSource"
+    <bean id="file" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
         <property name="driverClassName" value="${db.dirverClass}" />
         <property name="url" value="${db.url1}" />
@@ -75,7 +75,7 @@
     <bean id ="dataSource" class= "com.ssm.Multipledata.DynamicDataSource" >
         <property name ="targetDataSources">
             <map key-type ="java.lang.String">
-                <entry value-ref ="files" key= "files"></entry >
+                <entry value-ref ="file" key= "file"></entry >
                 <entry value-ref ="userservice" key= "userservice"></entry >
                 <entry value-ref ="pay" key= "pay"></entry >
             </map >
