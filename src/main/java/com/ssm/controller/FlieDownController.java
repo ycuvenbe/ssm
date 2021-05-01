@@ -83,7 +83,7 @@
 ////        String path = params.get(fileName);
 //        try {
 //            // path是指欲下载的文件的路径。
-//            File file = new File(path);
+//            Files file = new Files(path);
 //            // 取得文件名。
 //            String filename = file.getName();
 //            // 取得文件的后缀名。

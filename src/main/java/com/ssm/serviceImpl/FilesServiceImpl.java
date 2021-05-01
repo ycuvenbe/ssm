@@ -1,8 +1,12 @@
 package com.ssm.serviceImpl;
 
+import com.github.pagehelper.PageHelper;
 import com.ssm.Multipledata.DataSourceContextHolder;
-import com.ssm.mapper.FileMapper;
-import com.ssm.service.FileService;
+import com.ssm.mapper.FilesMapper;
+import com.ssm.po.Files;
+import com.ssm.po.FilesExample;
+import com.ssm.service.FilesService;
+import com.ssm.utiltools.basic.ValueUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,20 +18,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by ${shuang} on 2017/8/7.
  */
 @Service
-public class FileServiceImpl implements FileService {
+public class FilesServiceImpl implements FilesService {
 
     @Autowired
-    private FileMapper fileMapper;
+    private FilesMapper filesMapper;
 
     @Override
     public String upfile(HttpServletRequest request) throws IOException {
-        DataSourceContextHolder.setDbType("file");
-        String upPath="E:/";
+        DataSourceContextHolder.setDbType("files");
+        String upPath="E:/test/";
         long startTime=System.currentTimeMillis();
         //将当前上下文初始化给 CommonsMutipartResolver （多部分解析器）
         CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(
@@ -48,9 +53,9 @@ public class FileServiceImpl implements FileService {
                     String path=upPath+file.getOriginalFilename();
                     //上传
                     file.transferTo(new File(path));
-                    com.ssm.po.File file1 = new com.ssm.po.File();
-                    file1.setFilename(file.getOriginalFilename());
-                    fileMapper.insert(file1);
+                    Files files1 = new Files();
+                    files1.setFilename(file.getOriginalFilename());
+                    filesMapper.insert(files1);
                 }
             }
         }
@@ -62,5 +67,23 @@ public class FileServiceImpl implements FileService {
     @Override
     public void down(String fileName, HttpServletResponse response) {
 
+    }
+
+
+    @Override
+    public List<Files> selectByFiles(Files files, int page, int rows) {
+        DataSourceContextHolder.setDbType("files");
+        FilesExample example = new FilesExample();
+        FilesExample.Criteria criteria = example.createCriteria();
+        if (ValueUtil.notEmpity(files.getFilename())) {
+            criteria.andFilenameLike("%"+files.getFilename()+"%");
+        }
+//        如果还有条件直接把上面的if复制改字段
+        if (files.getId() != null) {
+            criteria.andIdEqualTo(files.getId());
+        }
+        //分页查询
+        PageHelper.startPage(page, rows);
+        return filesMapper.selectByExample(example);
     }
 }

@@ -20,7 +20,16 @@
     <!--扫描包-->
     <context:component-scan base-package="com.ssm.*"/>
     <!--如果用这种方法就不用上面的注解，默认加载很多参数绑定 比如json转换解析器，实际开发使用这个注解-->
-    <mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:annotation-driven>
+        <!-- 消息转换器 -->
+        <mvc:message-converters register-defaults="true">
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <property name="supportedMediaTypes" value="application/json;charset=UTF-8"/>
+            </bean>
+        </mvc:message-converters>
+
+
+    </mvc:annotation-driven>
 
 
     <!--文件上传 解析器-->
