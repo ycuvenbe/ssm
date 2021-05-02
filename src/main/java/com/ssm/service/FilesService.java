@@ -1,5 +1,6 @@
 package com.ssm.service;
 
+import com.ssm.po.Files;
 import com.ssm.po.FilesCustom;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,6 @@ public interface FilesService {
 //    下载
      Map<String,String> down(String fileName, HttpServletResponse response);
 //     * 根据条件分页查询
-    List<FilesCustom> selectByFiles(Map<String,String> map, int page, int rows);
+    List<Files> selectByFiles(Map<String,String> map, int page, int rows);
 
 }

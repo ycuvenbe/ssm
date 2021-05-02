@@ -2,6 +2,9 @@ package com.ssm.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.ssm.Multipledata.DataSourceContextHolder;
+import com.ssm.mapper.FilesMapper;
+import com.ssm.po.Files;
 import com.ssm.po.FilesCustom;
 import com.ssm.service.FilesService;
 import com.ssm.utiltools.basic.ValueUtil;
@@ -28,6 +31,8 @@ public class FilesController {
 
     @Autowired
     private FilesService filesService;
+    @Autowired
+    private FilesMapper filesMapper;
 
 
     //   采用spring提供的上传文件的方法
@@ -44,9 +49,9 @@ public class FilesController {
                                 @RequestParam(required = false, defaultValue = "10") int rows) {
 //        ModelAndView result = new ModelAndView(page_list);
         JSONObject result = new JSONObject();
-        List<FilesCustom> filesList = filesService.selectByFiles(params, page, rows);
+        List<Files> filesList = filesService.selectByFiles(params, page, rows);
         System.out.println(filesList.size());
-        result.put("pageInfo", new PageInfo<FilesCustom>(filesList));
+        result.put("pageInfo", new PageInfo<Files>(filesList));
         result.put("queryParam", params);
         result.put("page", page);
         result.put("rows", rows);
@@ -57,9 +62,12 @@ public class FilesController {
 
 
     @RequestMapping(value = "/down",method = RequestMethod.GET)
-    public void down(String path, HttpServletResponse response)  {
+    public void down(Integer id, HttpServletResponse response)  {
+        DataSourceContextHolder.setDbType("files");
 
-        String newpath = "E:"+path;
+       FilesCustom files = filesMapper.findByPrimaryKey(id);
+
+        String newpath = "J:"+files.getPath();
         //获得请求文件名
         try {
             // path是指欲下载的文件的路径。

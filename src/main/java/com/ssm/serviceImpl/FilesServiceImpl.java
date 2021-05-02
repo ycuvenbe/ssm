@@ -3,6 +3,7 @@ package com.ssm.serviceImpl;
 import com.github.pagehelper.PageHelper;
 import com.ssm.Multipledata.DataSourceContextHolder;
 import com.ssm.mapper.FilesMapper;
+import com.ssm.po.Files;
 import com.ssm.po.FilesCustom;
 import com.ssm.po.FilesQueryVo;
 import com.ssm.service.FilesService;
@@ -34,7 +35,8 @@ public class FilesServiceImpl implements FilesService {
     @Override
     public String upfile(HttpServletRequest request) throws IOException {
         DataSourceContextHolder.setDbType("files");
-        String upPath="E:/test/";
+        String upPath="J:/test/";
+        String newstring =upPath.substring(2);
         long startTime=System.currentTimeMillis();
         //将当前上下文初始化给 CommonsMutipartResolver （多部分解析器）
         CommonsMultipartResolver multipartResolver=new CommonsMultipartResolver(
@@ -57,14 +59,14 @@ public class FilesServiceImpl implements FilesService {
                     file.transferTo(new File(path));
                     FilesCustom files1 = new FilesCustom();
                     files1.setFilename(file.getOriginalFilename());
-                    files1.setPath(upPath.replaceAll("E:","")+file.getOriginalFilename());
+                    files1.setPath(newstring+file.getOriginalFilename());
                     filesMapper.insertfiles(files1);
                 }
             }
         }
         long endTime=System.currentTimeMillis();
         System.out.println("方法三的运行时间："+String.valueOf(endTime-startTime)+"ms");
-        return upPath.replaceAll("E:","");
+        return newstring;
     }
 
     @Override
@@ -123,11 +125,11 @@ public class FilesServiceImpl implements FilesService {
 
 
     @Override
-    public List<FilesCustom> selectByFiles(Map<String,String> map, int page, int rows) {
+    public List<Files> selectByFiles(Map<String,String> map, int page, int rows) {
         DataSourceContextHolder.setDbType("files");
         FilesQueryVo filesQueryVo = new FilesQueryVo();
-        filesQueryVo.setFilename(map.get("fileName"));
         FilesCustom filesCustom = new FilesCustom();
+        filesCustom.setFilename(map.get("fileName"));
         if(ValueUtil.notEmpity(map.get("id"))){
             filesCustom.setId(Integer.valueOf(map.get("id")));
         }

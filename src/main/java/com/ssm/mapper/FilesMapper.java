@@ -33,5 +33,7 @@ public interface FilesMapper {
 
     int updateByPrimaryKey(Files record);
 
-    List<FilesCustom> findListByPage(FilesQueryVo filesQueryVo);
+    List<Files> findListByPage(FilesQueryVo filesQueryVo);
+    FilesCustom findByPrimaryKey(Integer id);
+
 }

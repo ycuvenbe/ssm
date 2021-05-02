@@ -5,6 +5,14 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="fileName" property="filename" jdbcType="VARCHAR" />
   </resultMap>
+
+  <resultMap id="CustomResultMap" type="com.ssm.po.FilesCustom" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="fileName" property="filename" jdbcType="VARCHAR" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+  </resultMap>
+
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -86,6 +94,15 @@
     from files
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="findByPrimaryKey" resultMap="CustomResultMap" parameterType="java.lang.Integer" >
+    select
+   id,fileName,path,status
+    from files
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from files
     where id = #{id,jdbcType=INTEGER}
@@ -163,8 +180,8 @@
   </update>
 
   <!--查询条件里面的filesCustom是首字母小写-->
-  <select id="findListByPage" parameterType="com.ssm.po.FilesQueryVo"  resultType="com.ssm.po.FilesCustom" >
-    select id ,fileName, path from files
+  <select id="findListByPage" parameterType="com.ssm.po.FilesQueryVo"  resultMap="BaseResultMap" >
+    select id ,fileName from files
     <where>
       <if test="filesCustom!=null">
         <if test="filesCustom.id!=null and filesCustom.id!=''">

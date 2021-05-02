@@ -228,6 +228,9 @@
       <resource>
         <directory>${basedir}/src/main/resources</directory>
       </resource>
+      <resource>
+        <directory>${basedir}/src/config</directory>
+      </resource>
     </resources>
 
   </build>
