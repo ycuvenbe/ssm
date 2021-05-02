@@ -27,7 +27,6 @@ public class Generator {
 
     }
 
-
     public static void main(String[] args) {
         try {
             Generator.generator();
