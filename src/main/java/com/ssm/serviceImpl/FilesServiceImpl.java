@@ -3,8 +3,8 @@ package com.ssm.serviceImpl;
 import com.github.pagehelper.PageHelper;
 import com.ssm.Multipledata.DataSourceContextHolder;
 import com.ssm.mapper.FilesMapper;
-import com.ssm.po.Files;
-import com.ssm.po.FilesExample;
+import com.ssm.po.FilesCustom;
+import com.ssm.po.FilesQueryVo;
 import com.ssm.service.FilesService;
 import com.ssm.utiltools.basic.ValueUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ${shuang} on 2017/8/7.
@@ -53,37 +55,95 @@ public class FilesServiceImpl implements FilesService {
                     String path=upPath+file.getOriginalFilename();
                     //上传
                     file.transferTo(new File(path));
-                    Files files1 = new Files();
+                    FilesCustom files1 = new FilesCustom();
                     files1.setFilename(file.getOriginalFilename());
-                    filesMapper.insert(files1);
+                    files1.setPath(upPath.replaceAll("E:","")+file.getOriginalFilename());
+                    filesMapper.insertfiles(files1);
                 }
             }
         }
         long endTime=System.currentTimeMillis();
         System.out.println("方法三的运行时间："+String.valueOf(endTime-startTime)+"ms");
-        return upPath;
+        return upPath.replaceAll("E:","");
     }
 
     @Override
-    public void down(String fileName, HttpServletResponse response) {
+    public Map<String,String> down(String fileName, HttpServletResponse response) {
+
+        Map<String,String> map = new HashMap<>();
+        // get file list where the path has
+        String path = "J://电影种子";
+//        String path = "D://迅雷下载";
+//        D:\迅雷下载
+        File file = new File(path);
+        // get the folder list
+        File[] array = file.listFiles();
+        for(int i=0;i<array.length;i++){
+            if(array[i].isFile()){
+                map.put(array[i].getName(),array[i].getPath());
+//                // only take file name
+//                System.out.println("^^^^^" + array[i].getName());
+//                // take file path and name
+////                System.out.println("#####" + array[i]);
+////                // take file path and name
+////                System.out.println("*****" + array[i].getPath());
+            }else if(array[i].isDirectory()){
+                String newpath=array[i].getPath();
+                Map<String,String> map2= this.getFile(newpath);
+                map.putAll(map2);
+            }
+        }
+        return map;
 
     }
 
 
+    public   Map<String,String>  getFile(String path){
+        Map<String,String> map = new HashMap<>();
+        File file = new File(path);
+        // get the folder list
+        File[] array = file.listFiles();
+        for(int i=0;i<array.length;i++){
+            if(array[i].isFile()){
+                map.put(array[i].getName(),array[i].getPath());
+//                // only take file name
+//                System.out.println("^^^^^" + array[i].getName());
+//                // take file path and name
+////                System.out.println("#####" + array[i]);
+////                // take file path and name
+////                System.out.println("*****" + array[i].getPath());
+            }else if(array[i].isDirectory()){
+                String newpath=array[i].getPath();
+                Map<String,String> map2 =   this.getFile(newpath);
+                map.putAll(map2);
+            }
+        }
+        return map;
+    }
+
+
     @Override
-    public List<Files> selectByFiles(Files files, int page, int rows) {
+    public List<FilesCustom> selectByFiles(Map<String,String> map, int page, int rows) {
         DataSourceContextHolder.setDbType("files");
-        FilesExample example = new FilesExample();
-        FilesExample.Criteria criteria = example.createCriteria();
-        if (ValueUtil.notEmpity(files.getFilename())) {
-            criteria.andFilenameLike("%"+files.getFilename()+"%");
+        FilesQueryVo filesQueryVo = new FilesQueryVo();
+        filesQueryVo.setFilename(map.get("fileName"));
+        FilesCustom filesCustom = new FilesCustom();
+        if(ValueUtil.notEmpity(map.get("id"))){
+            filesCustom.setId(Integer.valueOf(map.get("id")));
         }
-//        如果还有条件直接把上面的if复制改字段
-        if (files.getId() != null) {
-            criteria.andIdEqualTo(files.getId());
-        }
+        filesQueryVo.setFilesCustom(filesCustom);
+//        FilesExample example = new FilesExample();
+//        FilesExample.Criteria criteria = example.createCriteria();
+//        if (ValueUtil.notEmpity(map.get("fileName"))) {
+//            criteria.andFilenameLike("%"+files.getFilename()+"%");
+//        }
+////        如果还有条件直接把上面的if复制改字段
+//        if (files.getId() != null) {
+//            criteria.andIdEqualTo(files.getId());
+//        }
         //分页查询
         PageHelper.startPage(page, rows);
-        return filesMapper.selectByExample(example);
+
+        return filesMapper.findListByPage(filesQueryVo);
     }
 }

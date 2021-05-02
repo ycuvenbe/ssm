@@ -1,8 +1,8 @@
 //package com.ssm.controller;
 //
-//import com.file.service.FileDownService;
-//import com.file.utiltools.basic.ValueUtil;
-//import com.file.utiltools.error.ToolsException;
+//import com.ssm.service.FilesService;
+//import com.ssm.utiltools.basic.ValueUtil;
+//import com.ssm.utiltools.error.ToolsException;
 //import org.apache.http.HttpStatus;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@
 //public class FlieDownController {
 //
 //    @Autowired
-//    private FileDownService fileDownService;
+//    private FilesService FilesService;
 //
 //    @RequestMapping(value = "/index",method = RequestMethod.POST)
 //    public Object index(String fileName, Integer pageSize, Integer pageNumber){
@@ -67,23 +67,14 @@
 //    @RequestMapping(value = "/down",method = RequestMethod.GET)
 //    public void down(String fileName, HttpServletResponse response)  {
 //        System.out.println(fileName);
-//        Map<String,String> map =null;
-//        try {
-//          map =  fileDownService.getFileName();
-//        } catch (ToolsException e) {
-//            e.printStackTrace();
-//        }
+//
+//        Map<String,String> map =  fileDownService;
+//
 //        String path = map.get(fileName);
-//        //获得请求文件名
-////        String fileName = null;
-////        Set keySet = params.keySet();
-////        for (Object keyName : keySet) {
-////           fileName = keyName.toString();
-////        }
-////        String path = params.get(fileName);
+//
 //        try {
 //            // path是指欲下载的文件的路径。
-//            Files file = new Files(path);
+//            File file = new File(path);
 //            // 取得文件名。
 //            String filename = file.getName();
 //            // 取得文件的后缀名。

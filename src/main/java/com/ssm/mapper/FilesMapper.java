@@ -1,7 +1,9 @@
 package com.ssm.mapper;
 
 import com.ssm.po.Files;
+import com.ssm.po.FilesCustom;
 import com.ssm.po.FilesExample;
+import com.ssm.po.FilesQueryVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -14,6 +16,8 @@ public interface FilesMapper {
     int deleteByPrimaryKey(Integer id);
 
     int insert(Files record);
+
+    int insertfiles(FilesCustom record);
 
     int insertSelective(Files record);
 
@@ -28,4 +32,6 @@ public interface FilesMapper {
     int updateByPrimaryKeySelective(Files record);
 
     int updateByPrimaryKey(Files record);
+
+    List<FilesCustom> findListByPage(FilesQueryVo filesQueryVo);
 }

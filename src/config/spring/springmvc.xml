@@ -21,18 +21,40 @@
     <context:component-scan base-package="com.ssm.*"/>
     <!--如果用这种方法就不用上面的注解，默认加载很多参数绑定 比如json转换解析器，实际开发使用这个注解-->
 
-    <!--<mvc:resources mapping="/html/*.html" location="/"></mvc:resources>-->
+    <!--<bean class="org.springframework.http.converter.StringHttpMessageConverter">-->
+        <!--<constructor-arg value="UTF-8" index="0">-->
+        <!--</constructor-arg>-->
+        <!--<property name="supportedMediaTypes">-->
+            <!--<list>-->
+                <!--<value>application/json;charset=UTF-8</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!-- 消息转换器 -->
 
     <mvc:annotation-driven>
-        <!-- 消息转换器 -->
         <mvc:message-converters register-defaults="true">
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <property name="supportedMediaTypes" value="application/json;charset=UTF-8"/>
             </bean>
+
         </mvc:message-converters>
-
-
     </mvc:annotation-driven>
+
+
+
+    <!--<bean id="stringHttpMessageConverter"-->
+          <!--class="org.springframework.http.converter.StringHttpMessageConverter">-->
+        <!--<property name="supportedMediaTypes">-->
+            <!--<list>-->
+                <!--<bean class="org.springframework.http.MediaType">-->
+                    <!--<constructor-arg value="application" />-->
+                    <!--<constructor-arg value="json" />-->
+                    <!--<constructor-arg value="UTF-8" />-->
+                <!--</bean>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
 
 
     <!--文件上传 解析器-->
@@ -49,7 +71,6 @@
     <mvc:cors>
         <mvc:mapping path="/**" allowed-origins="*" allow-credentials="true" max-age="1800" allowed-methods="GET,POST,OPTIONS"/>
     </mvc:cors>
-
 
     <!--处理器视图解析器
     解析jsp ,默认使用jstl标签 classpath 下面得有jstl包
