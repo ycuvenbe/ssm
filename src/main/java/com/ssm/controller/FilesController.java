@@ -41,7 +41,7 @@ public class FilesController {
         return filesService.upfile(request);
     }
 
-
+//这是一个测试
 //    @RequestMapping(value = {"list", "index", "index.html", ""})
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String getList(@RequestParam Map<String,String> params,
