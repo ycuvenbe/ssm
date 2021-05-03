@@ -1,7 +1,9 @@
 package com.ssm.mapper;
 
 import com.ssm.po.User;
+import com.ssm.po.UserCustom;
 import com.ssm.po.UserExample;
+import com.ssm.po.UserQueryVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +30,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User findByUserNameAndPassword(    UserCustom userCustom);
 }

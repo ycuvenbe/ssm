@@ -185,4 +185,8 @@
     </select>
 
 
+  <select id="findByUserNameAndPassword" parameterType="userCustom" resultMap="BaseResultMap">
+    select id,name from user where userName=#{userName} AND passWord=#{passWord}
+  </select>
+
 </mapper>
