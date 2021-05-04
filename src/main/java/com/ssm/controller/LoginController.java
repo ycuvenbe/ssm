@@ -4,7 +4,6 @@ import com.ssm.Multipledata.DataSourceContextHolder;
 import com.ssm.mapper.UserMapper;
 import com.ssm.po.User;
 import com.ssm.po.UserCustom;
-import com.ssm.po.UserQueryVo;
 import com.ssm.utiltools.basic.ValueUtil;
 import com.ssm.utiltools.error.ToolsException;
 import com.ssm.utiltools.jwt.AccessToken;
@@ -68,7 +67,7 @@ public class LoginController {
         //拼装accessToken
         String accessToken = JwtHelper.createJWT(userName, user.getId().toString(),
                 "一般用户", Audience.clientId, Audience.name,
-                Audience.expiresSecond * 1000, Audience.base64Secret);
+                Audience.expiresSecond* 1000 , Audience.base64Secret);
         //返回accessToken
         AccessToken accessTokenEntity = new AccessToken();
         accessTokenEntity.setAccess_token(accessToken);
