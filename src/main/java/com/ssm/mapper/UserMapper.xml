@@ -179,14 +179,23 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-
     <select id="findByUserId" parameterType="int" resultType="user">
         select* from user where id=#{id}
     </select>
 
+  <insert id="insertOne" parameterType="userCustom">
+    insert into user (userName,passWord
+    )
+    values ( #{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}
+    )
+  </insert>
+
 
   <select id="findByUserNameAndPassword" parameterType="userCustom" resultMap="BaseResultMap">
     select id,name from user where userName=#{userName} AND passWord=#{passWord}
+  </select>
+  <select id="findByUserName" parameterType="String" resultMap="BaseResultMap">
+    select id,name from user where userName=#{userName}
   </select>
 
 </mapper>

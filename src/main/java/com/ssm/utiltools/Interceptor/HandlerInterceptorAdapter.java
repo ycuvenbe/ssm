@@ -1,5 +1,6 @@
 package com.ssm.utiltools.Interceptor;
 
+import com.ssm.utiltools.basic.ValueUtil;
 import com.ssm.utiltools.jwt.UserUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,34 +30,19 @@ public class HandlerInterceptorAdapter implements HandlerInterceptor {
         String auth = httpServletRequest.getHeader("Authorization");
         String partlyUrl = httpServletRequest.getRequestURI();//  eg:/user/login
         String method = httpServletRequest.getMethod();//eg：　POST
+        System.out.println("请求路径为==》"+partlyUrl);
+        System.out.println("jwtToke ==》"+auth);
+//        System.out.println("请求报文为 ==》"+HttpRequestUtils.getAllParams(httpRequest));
         if(ispass(partlyUrl)){
             return true ;
         }
         if(auth!=""){
             String userName = UserUtils.getUserName(httpServletRequest);
-            if(mustLogin(partlyUrl)){
+            if(mustLogin(partlyUrl)&& ValueUtil.notEmpity(userName)){
                 return true ;
             }
         }
-
-
-//        if ((auth != null) && (auth.length() > 7))
-//        {
-//            String HeadStr = auth.substring(0, 6).toLowerCase();
-//            if (HeadStr.compareTo("bearer") == 0)
-//            {
-//
-//                auth = auth.substring(7, auth.length());
-//                Claims claims = JwtHelper.parseJWT(auth, Audience.base64Secret);
-//                if (claims != null)
-//                {
-//                    claims.get("userName")
-//                    return;
-//                }
-//            }
-//        }
-
-
+//        ValueUtil.isError("用户未登录或已登录超时,请重新登录");
         return false;
     }
 

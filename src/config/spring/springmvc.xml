@@ -40,6 +40,13 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.ssm.utiltools.Interceptor.HandlerInterceptorAdapter"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 
 
     <!--<bean id="stringHttpMessageConverter"-->

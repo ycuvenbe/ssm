@@ -4,6 +4,7 @@ import com.ssm.Multipledata.DataSourceContextHolder;
 import com.ssm.mapper.UserMapper;
 import com.ssm.po.User;
 import com.ssm.po.UserCustom;
+import com.ssm.po.UserExample;
 import com.ssm.utiltools.basic.ValueUtil;
 import com.ssm.utiltools.error.ToolsException;
 import com.ssm.utiltools.jwt.AccessToken;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sun.misc.BASE64Encoder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
@@ -32,7 +34,7 @@ public class LoginController {
     @Autowired
     private UserMapper userMapper;
 
-    @RequestMapping("/login")
+    @RequestMapping(value = "/login/overt" ,method =RequestMethod.POST )
     public String login(@RequestParam Map<String,String> params)  {
         DataSourceContextHolder.setDbType("files");
         try {
@@ -77,8 +79,44 @@ public class LoginController {
         return ValueUtil.toJson(HttpStatus.SC_CREATED,accessTokenEntity);
     }
 
+    //注册
+    @RequestMapping(value = "/register/overt",method = RequestMethod.POST)
+    public String register( String userName,String passWord ,String VerifCode ,HttpServletRequest request ) {
+        DataSourceContextHolder.setDbType("files");
+//        String code = (String) request.getSession().getAttribute("userName");
+        String code ="123";
+        if(code.equals(VerifCode)){
+                ValueUtil.toError(HttpStatus.SC_INTERNAL_SERVER_ERROR,"验证码错误");
+        }
+        BASE64Encoder en=new BASE64Encoder();
+        String pass =userName+passWord; String word=null;
+        try {
+            word=  en.encode(pass.getBytes("utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        UserCustom userCustom = new UserCustom();
+        userCustom.setUserName(userName);
+        userCustom.setPassWord(word);
+        userMapper.insertOne(userCustom);
+        return ValueUtil.toJson(HttpStatus.SC_CREATED,"恭喜你注册成功");
+    }
+
+    //验证
+    @RequestMapping(value = "/checkName/overt",method = RequestMethod.GET)
+    public String checkName( String userName ) {
+        DataSourceContextHolder.setDbType("files");
+       User user =  userMapper.findByUserName(userName);
+       if (ValueUtil.notEmpity(user)){
+           return ValueUtil.toJson(HttpStatus.SC_CONFLICT,"用户名被占用");
+       }else {
+           return ValueUtil.toJson(HttpStatus.SC_OK,"用户名可用");
+       }
+    }
+
+
     //验证token有效性
-    @RequestMapping(value = "/web/sso/checkToken",method = RequestMethod.GET)
+    @RequestMapping(value = "/checkToken/overt",method = RequestMethod.GET)
     public String checkToken( HttpServletRequest request ) {
         try {
             String username = UserUtils.getUserName(request);
@@ -89,6 +127,18 @@ public class LoginController {
         } catch (ToolsException e) {
             return ValueUtil.toError(e.getCode(),e.getMessage());
         }
+    }
+
+    //验证token有效性
+    @RequestMapping(value = "/member",method = RequestMethod.GET)
+    public String member( HttpServletRequest request ) {
+        String username=null;
+        try {
+            username = UserUtils.getUserName(request);
+        } catch (ToolsException e) {
+            e.printStackTrace();
+        }
+        return ValueUtil.toJson(username+"欢迎你");
     }
 
 }

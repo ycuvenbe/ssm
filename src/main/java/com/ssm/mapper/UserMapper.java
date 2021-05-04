@@ -31,5 +31,8 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    User findByUserNameAndPassword(    UserCustom userCustom);
+    User findByUserNameAndPassword(UserCustom userCustom);
+    int insertOne(UserCustom UserCustom);
+
+    User findByUserName(String userName);
 }
