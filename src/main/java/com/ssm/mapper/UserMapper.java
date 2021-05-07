@@ -35,4 +35,6 @@ public interface UserMapper {
     int insertOne(UserCustom UserCustom);
 
     User findByUserName(String userName);
+    User findByemail(String email);
+
 }

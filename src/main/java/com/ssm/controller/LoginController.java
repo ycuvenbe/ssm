@@ -40,14 +40,10 @@ public class LoginController {
         try {
             ValueUtil.verify(params.get("userName"));
             ValueUtil.verify(params.get("passWord"));
-//            ValueUtil.verify(params.get("verifyCode"));
         } catch (ToolsException e) {
             return ValueUtil.toError(e.getCode(),e.getMessage());
         }
-        String code =  params.get("passWord");
-//        if(code.equals("123")){
-//            return ValueUtil.toError(HttpStatus.SC_INTERNAL_SERVER_ERROR,"验证码错误");
-//        }
+
         String userName = params.get("userName");
         String passWord = params.get("passWord");
         BASE64Encoder en=new BASE64Encoder();
@@ -81,12 +77,14 @@ public class LoginController {
 
     //注册
     @RequestMapping(value = "/register/overt",method = RequestMethod.POST)
-    public String register( String userName,String passWord ,String VerifCode ,HttpServletRequest request ) {
+    public String register( String userName,String passWord ,String VerifCode,String email, HttpServletRequest request ) {
         DataSourceContextHolder.setDbType("files");
-//        String code = (String) request.getSession().getAttribute("userName");
-        String code ="123";
-        if(code.equals(VerifCode)){
-                ValueUtil.toError(HttpStatus.SC_INTERNAL_SERVER_ERROR,"验证码错误");
+        Object code = request.getSession().getAttribute("codeVerification");
+        if(ValueUtil.isEmpity(code)){
+            return  ValueUtil.toError(HttpStatus.SC_INTERNAL_SERVER_ERROR,"验证码失效请重新获取");
+        }
+        if(!code.equals(VerifCode)){
+             return    ValueUtil.toError(HttpStatus.SC_INTERNAL_SERVER_ERROR,"验证码错误");
         }
         BASE64Encoder en=new BASE64Encoder();
         String pass =userName+passWord; String word=null;
@@ -98,11 +96,12 @@ public class LoginController {
         UserCustom userCustom = new UserCustom();
         userCustom.setUserName(userName);
         userCustom.setPassWord(word);
+        userCustom.setEmail(email);
         userMapper.insertOne(userCustom);
         return ValueUtil.toJson(HttpStatus.SC_CREATED,"恭喜你注册成功");
     }
 
-    //验证
+    //验证用户名
     @RequestMapping(value = "/checkName/overt",method = RequestMethod.GET)
     public String checkName( String userName ) {
         DataSourceContextHolder.setDbType("files");
@@ -112,6 +111,17 @@ public class LoginController {
        }else {
            return ValueUtil.toJson(HttpStatus.SC_OK,"用户名可用");
        }
+    }
+    //验证邮箱
+    @RequestMapping(value = "/checkEmail/overt",method = RequestMethod.GET)
+    public String checkEmail( String email ) {
+        DataSourceContextHolder.setDbType("files");
+        User user =  userMapper.findByemail(email);
+        if (ValueUtil.notEmpity(user)){
+            return ValueUtil.toJson(HttpStatus.SC_CONFLICT,"邮箱已注册");
+        }else {
+            return ValueUtil.toJson(HttpStatus.SC_OK,"邮箱可用");
+        }
     }
 
 
@@ -129,7 +139,8 @@ public class LoginController {
         }
     }
 
-    //验证token有效性
+
+    //从token中获取用户名
     @RequestMapping(value = "/member",method = RequestMethod.GET)
     public String member( HttpServletRequest request ) {
         String username=null;

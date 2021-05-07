@@ -184,9 +184,10 @@
     </select>
 
   <insert id="insertOne" parameterType="userCustom">
-    insert into user (userName,passWord
+    insert into user (userName,passWord,email
     )
     values ( #{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}
+    , #{email,jdbcType=VARCHAR}
     )
   </insert>
 
@@ -194,8 +195,13 @@
   <select id="findByUserNameAndPassword" parameterType="userCustom" resultMap="BaseResultMap">
     select id,name from user where userName=#{userName} AND passWord=#{passWord}
   </select>
+
   <select id="findByUserName" parameterType="String" resultMap="BaseResultMap">
     select id,name from user where userName=#{userName}
   </select>
+  <select id="findByemail" parameterType="String" resultMap="BaseResultMap">
+    select id,name from user where email=#{email}
+  </select>
+
 
 </mapper>
