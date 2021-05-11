@@ -47,7 +47,11 @@ public class LoginController {
         }
 
         String code = (String)session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
-        if(code.equals(params.get("code"))){
+        if(code==null){
+            return ValueUtil.toError(HttpStatus.SC_INTERNAL_SERVER_ERROR,"伙计刷新界面在试试");
+        }
+        String vf = params.get("code");
+        if(!code.equals(vf)){
             return ValueUtil.toError(HttpStatus.SC_INTERNAL_SERVER_ERROR,"验证码错误");
         }
         String userName = params.get("userName");
@@ -66,7 +70,7 @@ public class LoginController {
         userCustom.setPassWord(word);
         User user = userMapper.findByUserNameAndPassword(userCustom);
         if(  ValueUtil.isEmpity(user)) {
-            return ValueUtil.toError("500","用户名密码错误");
+            return ValueUtil.toError(HttpStatus.SC_INTERNAL_SERVER_ERROR,"用户名密码错误");
         }
         //拼装accessToken
         String accessToken = JwtHelper.createJWT(userName, user.getId().toString(),
