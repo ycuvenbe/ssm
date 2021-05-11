@@ -26,6 +26,7 @@ public class CaptchaController {
 
     @RequestMapping(value = "/getcode/overt",method = RequestMethod.GET)
     public String getKaptchaImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        System.out.println("当你看到这句话说明开始获取验证码");
         HttpSession session = request.getSession();
         String sessionId = session.getId();
         System.out.println("请求sessionId==>"+sessionId);
