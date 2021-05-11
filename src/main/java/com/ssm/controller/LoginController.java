@@ -1,10 +1,10 @@
 package com.ssm.controller;
 
+import com.google.code.kaptcha.Constants;
 import com.ssm.Multipledata.DataSourceContextHolder;
 import com.ssm.mapper.UserMapper;
 import com.ssm.po.User;
 import com.ssm.po.UserCustom;
-import com.ssm.po.UserExample;
 import com.ssm.utiltools.basic.ValueUtil;
 import com.ssm.utiltools.error.ToolsException;
 import com.ssm.utiltools.jwt.AccessToken;
@@ -35,15 +35,21 @@ public class LoginController {
     private UserMapper userMapper;
 
     @RequestMapping(value = "/login/overt" ,method =RequestMethod.POST )
-    public String login(@RequestParam Map<String,String> params)  {
+    public String login(@RequestParam Map<String,String> params,HttpServletRequest request)  {
+        HttpSession session = request.getSession();
         DataSourceContextHolder.setDbType("files");
         try {
             ValueUtil.verify(params.get("userName"));
             ValueUtil.verify(params.get("passWord"));
+            ValueUtil.verify(params.get("code"));
         } catch (ToolsException e) {
             return ValueUtil.toError(e.getCode(),e.getMessage());
         }
 
+        String code = (String)session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        if(code.equals(params.get("code"))){
+            return ValueUtil.toError(HttpStatus.SC_INTERNAL_SERVER_ERROR,"验证码错误");
+        }
         String userName = params.get("userName");
         String passWord = params.get("passWord");
         BASE64Encoder en=new BASE64Encoder();
