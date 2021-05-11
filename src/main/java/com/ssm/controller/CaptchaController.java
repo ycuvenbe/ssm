@@ -35,7 +35,7 @@ public class CaptchaController {
         System.out.println("******************验证码是: " + code + "******************");
 
         response.setDateHeader("Expires", 0);
-
+        response.setHeader("P3P","CP=CAO PSA OUR");
         // Set standard HTTP/1.1 no-cache headers.
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 
