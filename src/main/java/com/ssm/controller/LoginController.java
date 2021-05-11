@@ -47,6 +47,7 @@ public class LoginController {
         }
 
         String code = (String)session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        System.out.println("这的验证码是多少："+code);
         if(code==null){
             return ValueUtil.toError(HttpStatus.SC_INTERNAL_SERVER_ERROR,"伙计刷新界面在试试");
         }
